@@ -1,4 +1,9 @@
+# -*- coding: UTF-8 -*-
 from pyrevit import routes, revit, DB
+import json
+
+from utils.utils import sanitize_name
+
 
 doc = revit.doc
 
@@ -13,27 +18,33 @@ def api_status():
         "api_name": "simple-mcp-api"
     })
 
-    
+
 @api.route('/model/summary/')
 def get_model_summary(doc):
     """Get summary information about the model"""
 
     # Create empty summary
     summary = {
-        "name": doc.Title,
+        "Project Name": doc.Title,
         "elements": [],
         "views": []
     }
     
     # Collect model data
     elements = DB.FilteredElementCollector(doc).WhereElementIsNotElementType().ToElements()
-
+    
+    limit = 0
     for element in elements:
         try:
-            # Try to get name - different element types might store names differently
+
             name = element.Name
             if name:
-                summary["elements"].append(name)
+                # Sanitize name before appending
+                summary["elements"].append(sanitize_name(name))
+                limit += 1
+
+                if limit == 10:
+                    break
         except:
             # Skip elements without accessible names
             pass
@@ -44,7 +55,6 @@ def get_model_summary(doc):
         .ToElements()
 
     # Add view names to summary
-    summary["views"] = [view.Name for view in views]
-        
+    summary["views"] = [sanitize_name(view.Name) for view in views]
     
     return routes.make_response(data=summary)
