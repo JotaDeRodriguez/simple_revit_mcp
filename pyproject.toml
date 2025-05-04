@@ -1,0 +1,10 @@
+[project]
+name = "simple-revit-mcp"
+version = "0.1.0"
+description = "A minimal implementation of the Model Context Protocol for Autodesk Revit"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.7.1",
+]
