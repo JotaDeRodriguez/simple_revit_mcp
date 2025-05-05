@@ -12,6 +12,8 @@ REVIT_HOST = "localhost"
 REVIT_PORT = 48884  # Default pyRevit Routes port
 BASE_URL = f"http://{REVIT_HOST}:{REVIT_PORT}/simple-mcp-api"
 
+
+### TODO Decide if resource or tool
 @mcp.tool()
 async def get_model_summary() -> str:
     """Get a summary of the active Revit model"""

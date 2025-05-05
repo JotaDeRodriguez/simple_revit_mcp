@@ -43,7 +43,7 @@ def get_model_summary(doc):
                 summary["elements"].append(sanitize_name(name))
                 limit += 1
 
-                if limit == 10:
+                if limit == 1000:
                     break
         except:
             # Skip elements without accessible names

@@ -53,12 +53,12 @@ async def test_client():
                         print(f"Could not extract content from result: {result}")
 
                 except Exception as e:
-                    print(f"Error reading resource: {type(e).name}: {e}")
+                    print(f"Error reading resource: {type(e)}: {e}")
                     import traceback
                     traceback.print_exc()
 
     except Exception as e:
-        print(f"Error: {type(e).name}: {e}", file=sys.stderr)
+        print(f"Error: {type(e)}: {e}", file=sys.stderr)
         import traceback
         traceback.print_exc()
         raise
